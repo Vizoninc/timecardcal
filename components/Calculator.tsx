@@ -9,7 +9,7 @@
  * and shareable URLs are local-only.
  */
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type {
   CalcOptions,
   DayInput,
@@ -395,7 +395,88 @@ export function Calculator({
       </div>
 
       {/* Day grid */}
-      <div className="mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-card">
+      {/* Mobile: stacked day cards (table shows at >= sm) */}
+      <div className="mt-5 space-y-3 sm:hidden">
+        {days.map((d, i) => {
+          const r = result.days[i];
+          const hasError = !!r.error;
+          return (
+            <div
+              key={d.id}
+              className={`rounded-2xl border p-4 shadow-card ${
+                hasError ? "border-red-200 bg-red-50" : "border-slate-200 bg-white"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-ink-900">{d.label}</span>
+                <span className="font-mono tabular-nums text-ink-900">
+                  {r.empty ? (
+                    <span className="text-slate-300">—</span>
+                  ) : hasError ? (
+                    <span className="font-sans text-xs text-red-600" role="alert">
+                      {r.error}
+                    </span>
+                  ) : (
+                    formatDurationHhmm(r.workedMinutes)
+                  )}
+                </span>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <label className="block text-xs font-medium text-ink-700">
+                  Start
+                  <input
+                    aria-label={`${d.label} start time`}
+                    value={d.start}
+                    onChange={(e) => updateDay(d.id, { start: e.target.value })}
+                    placeholder={timePlaceholder}
+                    aria-invalid={hasError}
+                    className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-base focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+                  />
+                </label>
+                <label className="block text-xs font-medium text-ink-700">
+                  End
+                  <input
+                    aria-label={`${d.label} end time`}
+                    value={d.end}
+                    onChange={(e) => updateDay(d.id, { end: e.target.value })}
+                    placeholder={timePlaceholder}
+                    aria-invalid={hasError}
+                    className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-base focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+                  />
+                </label>
+              </div>
+              <div className="mt-3 flex items-end justify-between gap-3">
+                <label className="block text-xs font-medium text-ink-700">
+                  Break (min)
+                  <input
+                    type="number"
+                    min={0}
+                    step={5}
+                    aria-label={`${d.label} unpaid break minutes`}
+                    value={d.breakMinutes === 0 ? "" : d.breakMinutes}
+                    onChange={(e) =>
+                      updateDay(d.id, { breakMinutes: Number(e.target.value) || 0 })
+                    }
+                    placeholder="0"
+                    className="mt-1 w-24 rounded-md border border-slate-300 px-3 py-2 text-base focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+                  />
+                </label>
+                <label className="inline-flex items-center gap-2 py-2 text-sm text-ink-800">
+                  <input
+                    type="checkbox"
+                    checked={d.overnight}
+                    onChange={(e) => updateDay(d.id, { overnight: e.target.checked })}
+                    className="h-5 w-5 rounded border-slate-300 text-brand-500 focus:ring-brand-100"
+                  />
+                  Overnight
+                </label>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-5 hidden overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-card sm:block">
         <table className="w-full min-w-[640px] border-collapse text-sm">
           <caption className="sr-only">
             Enter start time, end time, and unpaid break minutes for each day.
@@ -548,7 +629,11 @@ export function Calculator({
       {/* Totals — the report summary, also what prints. */}
       <div id="report" className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Total label="Total (hh:mm)" value={formatDurationHhmm(result.totalMinutes)} primary />
-        <Total label="Total (decimal)" value={result.totalDecimalHours.toFixed(2)} primary />
+        <Total
+          label="Total (decimal)"
+          value={<AnimatedNumber value={result.totalDecimalHours} decimals={2} />}
+          primary
+        />
         <Total
           label="Regular"
           value={`${formatDurationHhmm(result.regularMinutes)} · ${result.regularDecimalHours.toFixed(2)}`}
@@ -561,7 +646,11 @@ export function Calculator({
           <>
             <Total label="Regular pay" value={currency(result.regularPay)} />
             <Total label="Overtime pay" value={currency(result.overtimePay)} />
-            <Total label="Gross pay" value={currency(result.grossPay)} primary />
+            <Total
+              label="Gross pay"
+              value={<AnimatedNumber value={result.grossPay ?? 0} decimals={2} prefix="$" />}
+              primary
+            />
           </>
         )}
       </div>
@@ -626,13 +715,57 @@ export function Calculator({
   );
 }
 
+function AnimatedNumber({
+  value,
+  decimals = 2,
+  prefix = "",
+}: {
+  value: number;
+  decimals?: number;
+  prefix?: string;
+}) {
+  const [display, setDisplay] = useState(value);
+  const fromRef = useRef(value);
+  useEffect(() => {
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const to = value;
+    const from = fromRef.current;
+    if (reduce || from === to) {
+      setDisplay(to);
+      fromRef.current = to;
+      return;
+    }
+    const dur = 450;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(from + (to - from) * eased);
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else fromRef.current = to;
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [value]);
+  return (
+    <>
+      {prefix}
+      {display.toFixed(decimals)}
+    </>
+  );
+}
+
 function Total({
   label,
   value,
   primary = false,
 }: {
   label: string;
-  value: string;
+  value: ReactNode;
   primary?: boolean;
 }) {
   return (

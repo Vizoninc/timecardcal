@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { PwaRegister } from "../components/PwaRegister";
 import { SITE } from "../lib/seo/site";
 
 export const metadata: Metadata = {
@@ -13,7 +14,12 @@ export const metadata: Metadata = {
   description: SITE.description,
   applicationName: SITE.name,
   alternates: { canonical: "/" },
-  icons: { icon: "/icon.svg", apple: "/icon.svg" },
+  icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
+  appleWebApp: {
+    capable: true,
+    title: SITE.name,
+    statusBarStyle: "black-translucent",
+  },
   openGraph: {
     title: `${SITE.tagline} | ${SITE.name}`,
     description: SITE.description,
@@ -55,6 +61,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <PwaRegister />
       </body>
     </html>
   );
