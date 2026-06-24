@@ -11,6 +11,8 @@ import { Calculator } from "./Calculator";
 import { AdSlot } from "./AdSlot";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { Faq } from "./Faq";
+import { TrustStrip } from "./TrustStrip";
+import { CtaBand } from "./CtaBand";
 import { JsonLd } from "./JsonLd";
 import {
   breadcrumbSchema,
@@ -21,6 +23,9 @@ import {
 
 export function CalculatorPage({ page }: { page: PageContent }) {
   const path = `/${page.slug}`;
+  const showDecimalTable =
+    page.slug === "minutes-to-decimal-payroll" ||
+    page.slug === "decimal-hours-calculator";
   const crumbs: Breadcrumb[] = [
     { name: "Home", path: "/" },
     { name: page.breadcrumb, path },
@@ -49,12 +54,19 @@ export function CalculatorPage({ page }: { page: PageContent }) {
           <h1 className="mt-4 text-4xl font-black leading-[1.08] tracking-tight text-ink-900 sm:text-5xl">
             {page.h1}
           </h1>
+          <p className="mt-4 max-w-2xl text-lg font-semibold text-ink-900">
+            {page.answer}
+          </p>
           {page.intro.map((p, i) => (
             <p key={i} className="mt-3 max-w-prose text-lg text-ink-700">
               {p}
             </p>
           ))}
         </header>
+
+        <div className="mt-6">
+          <TrustStrip />
+        </div>
 
         {/* Ad slot 1: leaderboard below the hero (above the fold -> not lazy) */}
         <div className="my-6">
@@ -99,25 +111,13 @@ export function CalculatorPage({ page }: { page: PageContent }) {
             <h2 id="ot-heading" className="text-xl font-semibold text-ink-900">
               How overtime is handled
             </h2>
-            <p className="mt-2 text-ink-700">
-              Choose a rule that matches your situation. <strong>Weekly threshold</strong>{" "}
-              marks any hours over your weekly limit (often 40) as overtime.{" "}
-              <strong>Daily + weekly</strong> also marks hours over a daily limit
-              (often 8) as overtime, without double-counting them in the weekly
-              total. <strong>Custom</strong> lets you set your own thresholds and
-              multiplier. Overtime hours are paid at your multiplier (commonly 1.5×).
-            </p>
+            <p className="mt-2 text-ink-700">{page.overtimeNote}</p>
           </section>
           <section aria-labelledby="breaks-heading" className="max-w-prose">
             <h2 id="breaks-heading" className="text-xl font-semibold text-ink-900">
               How breaks are handled
             </h2>
-            <p className="mt-2 text-ink-700">
-              Enter unpaid break minutes per day and they are subtracted from that
-              day&rsquo;s clock time. Paid breaks should be left at 0 so they stay
-              in the total. Each day is independent, so a 30-minute lunch on one day
-              and a 60-minute lunch on another are both handled correctly.
-            </p>
+            <p className="mt-2 text-ink-700">{page.breaksNote}</p>
           </section>
         </div>
 
@@ -136,43 +136,66 @@ export function CalculatorPage({ page }: { page: PageContent }) {
           </div>
         </section>
 
-        {/* Minutes-to-decimal quick reference (useful, evergreen) */}
-        <section aria-labelledby="conv-heading" className="mt-12 max-w-prose">
-          <h2 id="conv-heading" className="text-2xl font-semibold text-ink-900">
-            Minutes to decimal hours
+        {/* Page-specific tips */}
+        <section aria-labelledby="tips-heading" className="mt-12 max-w-prose">
+          <h2 id="tips-heading" className="text-2xl font-semibold text-ink-900">
+            Tips
           </h2>
-          <p className="mt-2 text-ink-700">
-            Payroll usually wants decimal hours. Divide minutes by 60:
-          </p>
-          <div className="mt-3 overflow-hidden rounded-lg border border-slate-200">
-            <table className="w-full text-sm">
-              <thead className="bg-slate-50 text-left text-xs uppercase text-ink-700">
-                <tr>
-                  <th scope="col" className="px-3 py-2">Minutes</th>
-                  <th scope="col" className="px-3 py-2">Decimal</th>
-                </tr>
-              </thead>
-              <tbody className="font-mono tabular-nums">
-                {[
-                  [15, "0.25"],
-                  [30, "0.50"],
-                  [45, "0.75"],
-                  [60, "1.00"],
-                ].map(([m, d]) => (
-                  <tr key={m} className="border-t border-slate-100">
-                    <td className="px-3 py-1.5">{m}</td>
-                    <td className="px-3 py-1.5">{d}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-ink-700">
             {page.conversionTips.map((tip, i) => (
               <li key={i}>{tip}</li>
             ))}
           </ul>
+          {!showDecimalTable && (
+            <p className="mt-3 text-ink-700">
+              Need to turn minutes into decimals (15 = 0.25, 30 = 0.50, 45 = 0.75)?
+              Use the{" "}
+              <Link href="/minutes-to-decimal-payroll" className="text-brand-700 underline">
+                minutes-to-decimal guide
+              </Link>{" "}
+              or the{" "}
+              <Link href="/decimal-hours-calculator" className="text-brand-700 underline">
+                decimal hours calculator
+              </Link>
+              .
+            </p>
+          )}
         </section>
+
+        {/* Minutes-to-decimal table (only on the decimal-focused pages) */}
+        {showDecimalTable && (
+          <section aria-labelledby="conv-heading" className="mt-12 max-w-prose">
+            <h2 id="conv-heading" className="text-2xl font-semibold text-ink-900">
+              Minutes to decimal hours
+            </h2>
+            <p className="mt-2 text-ink-700">
+              Payroll usually wants decimal hours. Divide minutes by 60:
+            </p>
+            <div className="mt-3 overflow-hidden rounded-lg border border-slate-200">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-50 text-left text-xs uppercase text-ink-700">
+                  <tr>
+                    <th scope="col" className="px-3 py-2">Minutes</th>
+                    <th scope="col" className="px-3 py-2">Decimal</th>
+                  </tr>
+                </thead>
+                <tbody className="font-mono tabular-nums">
+                  {[
+                    [15, "0.25"],
+                    [30, "0.50"],
+                    [45, "0.75"],
+                    [60, "1.00"],
+                  ].map(([m, d]) => (
+                    <tr key={m} className="border-t border-slate-100">
+                      <td className="px-3 py-1.5">{m}</td>
+                      <td className="px-3 py-1.5">{d}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
         {/* Printable / export guidance */}
         <section aria-labelledby="print-heading" className="mt-12 max-w-prose">
@@ -214,6 +237,8 @@ export function CalculatorPage({ page }: { page: PageContent }) {
             ))}
           </ul>
         </section>
+
+        <CtaBand />
 
         <p className="mt-10 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           <strong>Please verify your numbers.</strong> {VERIFY_DISCLAIMER}

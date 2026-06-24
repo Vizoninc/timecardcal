@@ -43,6 +43,12 @@ export interface PageContent {
   defaults: CalculatorDefaults;
   /** Breadcrumb display name. */
   breadcrumb: string;
+  /** One-sentence, answer-first definition for snippets/AI (shown under H1). */
+  answer: string;
+  /** Page-specific note on how overtime works (reduces cross-page duplication). */
+  overtimeNote: string;
+  /** Page-specific note on how breaks work. */
+  breaksNote: string;
 }
 
 const VERIFY_NOTE =
@@ -51,6 +57,12 @@ const VERIFY_NOTE =
 export const PAGES: Record<string, PageContent> = {
   "time-card-calculator": {
     slug: "time-card-calculator",
+    answer:
+      "A time card calculator adds up the hours between your clock-in and clock-out times each day, subtracts unpaid breaks, and gives you daily and weekly totals in both hours:minutes and decimal hours.",
+    overtimeNote:
+      "On a time card, overtime is usually any time past 40 hours in a week. Choose Weekly to flag it automatically, or Daily + weekly if your job also counts hours past 8 in a single day.",
+    breaksNote:
+      "Enter the unpaid minutes for each shift — a 30-minute lunch, say — and the calculator removes them from that day's total. Paid breaks stay in; just leave the field at 0.",
     breadcrumb: "Time Card Calculator",
     h1: "Time Card Calculator",
     seoTitle: "Time Card Calculator — Free Hours, Breaks & Pay",
@@ -110,6 +122,12 @@ export const PAGES: Record<string, PageContent> = {
 
   "timesheet-calculator": {
     slug: "timesheet-calculator",
+    answer:
+      "A timesheet calculator totals an employee's hours across a full pay period, weekly or biweekly, subtracting breaks and separating regular hours from overtime so the numbers are payroll-ready.",
+    overtimeNote:
+      "Set the weekly threshold (commonly 40) and each week's extra hours are marked as overtime. In biweekly mode every week is judged on its own, so a heavy week and a light week never cancel out.",
+    breaksNote:
+      "Unpaid breaks are entered per day and deducted from that day's hours, so the timesheet reflects paid time only. Use 0 for any break that is paid.",
     breadcrumb: "Timesheet Calculator",
     h1: "Timesheet Calculator",
     seoTitle: "Timesheet Calculator — Weekly & Biweekly Hours",
@@ -164,6 +182,12 @@ export const PAGES: Record<string, PageContent> = {
 
   "work-hours-calculator": {
     slug: "work-hours-calculator",
+    answer:
+      "A work hours calculator figures out exactly how many hours you worked between two times, minus unpaid breaks — handy for checking a paycheck against your own count.",
+    overtimeNote:
+      "Turn on a weekly threshold to split your hours into regular and overtime, or leave it on None if you just want the raw total of hours worked.",
+    breaksNote:
+      "Subtract unpaid break time by entering the minutes for each day. If your breaks are paid, leave it at 0 and they count toward your total.",
     breadcrumb: "Work Hours Calculator",
     h1: "Work Hours Calculator",
     seoTitle: "Work Hours Calculator — Daily & Weekly Hours Worked",
@@ -213,6 +237,12 @@ export const PAGES: Record<string, PageContent> = {
 
   "time-card-calculator-with-lunch-break": {
     slug: "time-card-calculator-with-lunch-break",
+    answer:
+      "This time card calculator subtracts lunch and other unpaid breaks for you: enter your clock times and the break minutes, and it returns the hours you actually worked.",
+    overtimeNote:
+      "Breaks are removed before overtime is calculated, so overtime reflects your true worked hours rather than clock-to-clock time. Pick a weekly or daily + weekly rule as needed.",
+    breaksNote:
+      "This is the heart of this page: type the unpaid minutes (30 for a half-hour lunch, 60 for an hour) for each day and they come straight off that day's total. Every day can have a different break.",
     breadcrumb: "Time Card with Lunch Break",
     h1: "Time Card Calculator with Lunch Break",
     seoTitle: "Time Card Calculator with Lunch Break — Subtract Breaks",
@@ -266,6 +296,12 @@ export const PAGES: Record<string, PageContent> = {
 
   "biweekly-timesheet-calculator": {
     slug: "biweekly-timesheet-calculator",
+    answer:
+      "A biweekly timesheet calculator totals 14 days of work in one place, subtracting breaks and splitting overtime per week, so a two-week pay period is ready to hand to payroll.",
+    overtimeNote:
+      "Across a biweekly period the weekly threshold applies to each week separately. A 45-hour week earns overtime even when the other week is light — the two weeks are never averaged together.",
+    breaksNote:
+      "Enter unpaid breaks for each of the 14 days and they are deducted day by day. Paid breaks stay in the total at 0 minutes.",
     breadcrumb: "Biweekly Timesheet Calculator",
     h1: "Biweekly Timesheet Calculator",
     seoTitle: "Biweekly Timesheet Calculator — 14-Day Pay Periods",
@@ -316,6 +352,12 @@ export const PAGES: Record<string, PageContent> = {
 
   "minutes-to-decimal-payroll": {
     slug: "minutes-to-decimal-payroll",
+    answer:
+      "To convert minutes to decimal hours for payroll, divide the minutes by 60: 15 minutes is 0.25, 30 is 0.50, and 45 is 0.75. The calculator below does it for a whole timesheet automatically.",
+    overtimeNote:
+      "Once hours are in decimal form, overtime multiplies cleanly — set a weekly threshold and the tool splits regular and overtime decimal hours for you.",
+    breaksNote:
+      "Unpaid breaks are subtracted before the decimal conversion, so the decimal total reflects paid time only.",
     breadcrumb: "Minutes to Decimal (Payroll)",
     h1: "Minutes to Decimal Hours for Payroll",
     seoTitle: "Minutes to Decimal Payroll Converter — Chart & Calculator",
@@ -368,6 +410,12 @@ export const PAGES: Record<string, PageContent> = {
 
   "decimal-hours-calculator": {
     slug: "decimal-hours-calculator",
+    answer:
+      "A decimal hours calculator converts clock times into decimal hours — so 8 hours 15 minutes becomes 8.25 — which is the format most payroll systems expect.",
+    overtimeNote:
+      "Regular and overtime hours are both shown in decimal form, ready to multiply by a pay rate. Choose the overtime rule that matches your job.",
+    breaksNote:
+      "Break minutes are removed before the decimal total is calculated, so 8.25 means 8.25 hours actually worked.",
     breadcrumb: "Decimal Hours Calculator",
     h1: "Decimal Hours Calculator",
     seoTitle: "Decimal Hours Calculator — Convert Time to Decimals",
