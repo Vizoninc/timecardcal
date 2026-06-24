@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Single vibrant "pop" accent (violet) against a slate neutral base.
         brand: {
           50: "#f5f3ff",
           100: "#ede9fe",

@@ -36,7 +36,6 @@ export default function HomePage() {
           }),
         ]}
       />
-      {/* Bold dark hero band */}
       <section className="relative overflow-hidden bg-ink-950 text-white">
         <div
           aria-hidden="true"
