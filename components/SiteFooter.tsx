@@ -10,6 +10,7 @@ const TOOLS = [
   { href: "/biweekly-timesheet-calculator", label: "Biweekly Timesheet Calculator" },
   { href: "/minutes-to-decimal-payroll", label: "Minutes to Decimal (Payroll)" },
   { href: "/decimal-hours-calculator", label: "Decimal Hours Calculator" },
+  { href: "/embed-widget", label: "Embed on Your Site" },
 ];
 
 export function SiteFooter() {
