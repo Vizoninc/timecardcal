@@ -44,12 +44,13 @@ export function CalculatorPage({ page }: { page: PageContent }) {
         <Breadcrumbs items={crumbs} />
 
         {/* Hero */}
-        <header className="mt-4">
-          <h1 className="text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+        <header className="mt-5 animate-fade-up">
+          <span className="eyebrow">Free • No sign-in</span>
+          <h1 className="mt-4 text-4xl font-black leading-[1.08] tracking-tight text-ink-900 sm:text-5xl">
             {page.h1}
           </h1>
           {page.intro.map((p, i) => (
-            <p key={i} className="mt-3 max-w-prose text-ink-700">
+            <p key={i} className="mt-3 max-w-prose text-lg text-ink-700">
               {p}
             </p>
           ))}

@@ -234,7 +234,7 @@ export function Calculator({
   return (
     <section aria-label="Time card calculator" className="calc-root">
       {/* Settings */}
-      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-card sm:p-5">
         <h2 className="sr-only">Calculator settings</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <fieldset>
@@ -395,7 +395,7 @@ export function Calculator({
       </div>
 
       {/* Day grid */}
-      <div className="mt-5 overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-card">
         <table className="w-full min-w-[640px] border-collapse text-sm">
           <caption className="sr-only">
             Enter start time, end time, and unpaid break minutes for each day.
@@ -499,42 +499,42 @@ export function Calculator({
         <button
           type="button"
           onClick={resetAll}
-          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="btn-ghost"
         >
           Reset / clear
         </button>
         <button
           type="button"
           onClick={handleExportCsv}
-          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="btn-ghost"
         >
           Export CSV
         </button>
         <button
           type="button"
           onClick={() => window.print()}
-          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="btn-ghost"
         >
           Print / save as PDF
         </button>
         <button
           type="button"
           onClick={handleSaveRecent}
-          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="btn-ghost"
         >
           Save timesheet
         </button>
         <button
           type="button"
           onClick={handleSavePreset}
-          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="btn-ghost"
         >
           Save employee preset
         </button>
         <button
           type="button"
           onClick={handleShare}
-          className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          className="btn-ghost"
         >
           Copy share link
         </button>
@@ -637,14 +637,22 @@ function Total({
 }) {
   return (
     <div
-      className={`rounded-xl border p-4 ${
-        primary ? "border-brand-100 bg-brand-50" : "border-slate-200 bg-white"
+      className={`rounded-2xl border p-5 transition ${
+        primary
+          ? "border-transparent bg-brand-600 text-white shadow-pop"
+          : "border-slate-200 bg-white shadow-card"
       }`}
     >
-      <p className="text-xs font-medium uppercase tracking-wide text-ink-700">{label}</p>
       <p
-        className={`mt-1 font-mono text-2xl tabular-nums ${
-          primary ? "text-brand-700" : "text-ink-900"
+        className={`text-xs font-bold uppercase tracking-widest ${
+          primary ? "text-brand-100" : "text-ink-700"
+        }`}
+      >
+        {label}
+      </p>
+      <p
+        className={`mt-1.5 font-mono text-3xl font-bold tabular-nums ${
+          primary ? "text-white" : "text-ink-900"
         }`}
       >
         {value}
