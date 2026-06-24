@@ -53,7 +53,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "time-card-calculator",
     breadcrumb: "Time Card Calculator",
     h1: "Time Card Calculator",
-    seoTitle: "Time Card Calculator — Free Hours, Breaks & Pay | TimeCardCalc",
+    seoTitle: "Time Card Calculator — Free Hours, Breaks & Pay",
     seoDescription:
       "Free time card calculator. Enter clock-in and clock-out times, subtract lunch breaks, and get daily and weekly totals in hh:mm and decimal hours, plus overtime and pay.",
     intro: [
@@ -112,7 +112,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "timesheet-calculator",
     breadcrumb: "Timesheet Calculator",
     h1: "Timesheet Calculator",
-    seoTitle: "Timesheet Calculator — Weekly & Biweekly Hours | TimeCardCalc",
+    seoTitle: "Timesheet Calculator — Weekly & Biweekly Hours",
     seoDescription:
       "Free timesheet calculator for weekly and biweekly periods. Track hours per day, subtract breaks, split regular and overtime, and export a clean timesheet for payroll.",
     intro: [
@@ -166,7 +166,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "work-hours-calculator",
     breadcrumb: "Work Hours Calculator",
     h1: "Work Hours Calculator",
-    seoTitle: "Work Hours Calculator — Daily & Weekly Hours Worked | TimeCardCalc",
+    seoTitle: "Work Hours Calculator — Daily & Weekly Hours Worked",
     seoDescription:
       "Calculate hours worked from start and end times. Free work hours calculator with break deductions, weekly totals, decimal hours, and overtime for hourly workers.",
     intro: [
@@ -215,7 +215,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "time-card-calculator-with-lunch-break",
     breadcrumb: "Time Card with Lunch Break",
     h1: "Time Card Calculator with Lunch Break",
-    seoTitle: "Time Card Calculator with Lunch Break — Subtract Breaks | TimeCardCalc",
+    seoTitle: "Time Card Calculator with Lunch Break — Subtract Breaks",
     seoDescription:
       "Time card calculator that subtracts lunch and unpaid breaks automatically. Enter clock times and break minutes for accurate daily and weekly worked-hours totals.",
     intro: [
@@ -268,7 +268,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "biweekly-timesheet-calculator",
     breadcrumb: "Biweekly Timesheet Calculator",
     h1: "Biweekly Timesheet Calculator",
-    seoTitle: "Biweekly Timesheet Calculator — 14-Day Pay Periods | TimeCardCalc",
+    seoTitle: "Biweekly Timesheet Calculator — 14-Day Pay Periods",
     seoDescription:
       "Free biweekly timesheet calculator for 14-day pay periods. Track two weeks of hours, subtract breaks, split overtime per week, and export totals for payroll.",
     intro: [
@@ -318,7 +318,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "minutes-to-decimal-payroll",
     breadcrumb: "Minutes to Decimal (Payroll)",
     h1: "Minutes to Decimal Hours for Payroll",
-    seoTitle: "Minutes to Decimal Payroll Converter — Chart & Calculator | TimeCardCalc",
+    seoTitle: "Minutes to Decimal Payroll Converter — Chart & Calculator",
     seoDescription:
       "Convert minutes to decimal hours for payroll. See the full minute-to-decimal chart (15=0.25, 30=0.50, 45=0.75) and calculate a whole timesheet in decimal hours.",
     intro: [
@@ -370,7 +370,7 @@ export const PAGES: Record<string, PageContent> = {
     slug: "decimal-hours-calculator",
     breadcrumb: "Decimal Hours Calculator",
     h1: "Decimal Hours Calculator",
-    seoTitle: "Decimal Hours Calculator — Convert Time to Decimals | TimeCardCalc",
+    seoTitle: "Decimal Hours Calculator — Convert Time to Decimals",
     seoDescription:
       "Decimal hours calculator. Enter clock times and instantly get totals in decimal hours for payroll, plus the hh:mm equivalent, break deductions, and overtime.",
     intro: [

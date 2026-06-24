@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description: SITE.description,
   applicationName: SITE.name,
   alternates: { canonical: "/" },
+  icons: { icon: "/icon.svg", apple: "/icon.svg" },
   openGraph: {
     title: `${SITE.tagline} | ${SITE.name}`,
     description: SITE.description,
@@ -20,13 +21,19 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: SITE.locale,
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: SITE.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: SITE.twitter,
+    images: ["/og.png"],
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#2563eb",
+  themeColor: "#7c3aed",
 };
 
 export default function RootLayout({

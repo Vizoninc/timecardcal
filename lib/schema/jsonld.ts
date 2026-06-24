@@ -20,6 +20,7 @@ export function organizationSchema() {
     "@type": "Organization",
     name: SITE.legalName,
     url: SITE.url,
+    logo: absoluteUrl("/logo.png"),
     description: SITE.description,
   };
 }
