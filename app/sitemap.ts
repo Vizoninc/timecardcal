@@ -6,7 +6,7 @@ import { PAGE_SLUGS } from "../content/data/pages";
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const staticPaths = ["/", "/saved", "/embed-widget"];
+  const staticPaths = ["/", "/how-to-use", "/saved", "/embed-widget"];
   const calculatorPaths = PAGE_SLUGS.map((slug) => `/${slug}`);
 
   return [...staticPaths, ...calculatorPaths].map((path) => ({

@@ -11,6 +11,7 @@ const TOOLS = [
   { href: "/minutes-to-decimal-payroll", label: "Minutes to Decimal (Payroll)" },
   { href: "/decimal-hours-calculator", label: "Decimal Hours Calculator" },
   { href: "/embed-widget", label: "Embed on Your Site" },
+  { href: "/how-to-use", label: "How to Use the Calculator" },
 ];
 
 export function SiteFooter() {
